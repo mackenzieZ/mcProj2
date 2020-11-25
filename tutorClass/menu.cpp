@@ -3,22 +3,20 @@
 #include <iostream>
 #include "tutor.hpp"
 
-using namespace std;
-
-void displayMainMenu(){
-    cout << "===MENU===" << endl;
-    cout << "1)Tutor Information" << endl << "2)Course Information" << endl << "3)Generate Review" << endl << "0)Exit" << endl;
-    cout << "Which menu option would you like to access?" << endl;
+void displayMainMenu() {
+    std::cout << "===MENU===" << std::endl;
+    std::cout << "1)Tutor Information" << std::endl << "2)Course Information" << std::endl << "3)Generate Review" << std::endl << "0)Exit" << std::endl;
+    std::cout << "Which menu option would you like to access?" << std::endl;
 }
 
 void tutorMenu(){
-    cout << "===Tutor Information=== " << endl;
-    cout << "1)Add Tutor" << endl << "2)Remove Tutor" << endl << "3)Edit Existing Tutor" << endl << "0)Return to Main Menu" << endl;
-    cout << "Which option would you like to access?" << endl;
+    std::cout << "===Tutor Information=== " << std::endl;
+    std::cout << "1)Add Tutor" << std::endl << "2)Remove Tutor" << std::endl << "3)Edit Existing Tutor" << std::endl << "0)Return to Main Menu" << std::endl;
+    std::cout << "Which option would you like to access?" << std::endl;
 }
 
 void editTutorMenu(){
-    cout << "===Edit Tutor===" << endl;
-    cout << "1)Change their schedule" << endl << "2)Change their abilities" << endl << "0)Return to Tutor Information" << endl;
-    cout << "Which option would you like to access?" << endl;
+    std::cout << "===Edit Tutor===" << std::endl;
+    std::cout << "1)Change their schedule" << std::endl << "2)Change their abilities" << std::endl << "0)Return to Tutor Information" << std::endl;
+    std::cout << "Which option would you like to access?" << std::endl;
 }
