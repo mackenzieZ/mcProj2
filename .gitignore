@@ -1,3 +1,7 @@
 workspace.code-workspace
 Makefile
 mcProj.code-workspace
+build/test
+build/obj/ExcelReader.o
+build/obj/menu.o
+build/obj/testMenu.o
