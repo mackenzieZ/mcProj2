@@ -1,4 +1,4 @@
-#proj8 makefile, use make all
+#Mac make file, use 'make all'
 
 TARGET = build/test
 OBJDIR = build/obj
