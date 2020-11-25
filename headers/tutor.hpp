@@ -12,7 +12,7 @@
 
 #define NUM_DAYS 7
 
-struct shift{ shift() : m_start(0), m_end(0) {}
+struct Shift { Shift() : m_start(0), m_end(0) {}
 
     int m_start;
     int m_end;
@@ -22,23 +22,22 @@ struct shift{ shift() : m_start(0), m_end(0) {}
     }
 };
 
-
-class Tutor{
+class Tutor {
     public:
 
-    Tutor(){
+    Tutor() {
         defaultSchedule();
         defaultAbilities();
     }
 
-    Tutor(std::string tutorName, bool cleared, shift schedule[NUM_DAYS], std::map<std::string,bool> m):
+    Tutor(std::string tutorName, bool cleared, Shift schedule[NUM_DAYS], std::map<std::string,bool> m):
     m_name(tutorName), m_cleared(cleared)
     {
         std::cout << "this is the param ctor " << m_name << m_cleared << std::endl;
         m_abilities = m;
     }
 
-    Tutor(std::string tutorName, bool cleared, shift schedule[NUM_DAYS]):
+    Tutor(std::string tutorName, bool cleared, Shift schedule[NUM_DAYS]):
     m_name(tutorName), m_cleared(cleared)
     {
         defaultAbilities();
@@ -51,7 +50,7 @@ class Tutor{
 
     }
 
-    void addShift(shift newshift, int index){
+    void addShift(Shift newshift, int index){
         m_schedule[index-1] = newshift;
         newshift.printShift();
     }
@@ -82,7 +81,7 @@ class Tutor{
         m_abilities["s352"] = false; 
     }
     void defaultSchedule() {
-        shift emptyShift;
+        Shift emptyShift;
         for(int i = 0; i < NUM_DAYS; i++){
             m_schedule[i] = emptyShift;
         }
@@ -99,13 +98,39 @@ class Tutor{
         m_abilities.find(key) ->second = newValue;
     }
 
+    // Operators needed for compatibilty sake
+    friend bool operator==(const Tutor & lhs, const Tutor & rhs);
+
+    friend bool operator<(const Tutor & lhs, const Tutor & rhs);
+
+    friend bool operator>(const Tutor & lhs, const Tutor & rhs);
+
+    friend std::ostream & operator<<(std::ostream & os, const Tutor & tutor);
+
     private:
     std::string m_name;
     bool m_cleared;
 
-    shift m_schedule[NUM_DAYS];
+    Shift m_schedule[NUM_DAYS];
     std::map<std::string, bool> m_abilities;
 
 };
+
+std::ostream & operator<<(std::ostream & os, const Tutor & tutor) {
+    os << tutor.m_name;
+    return os;
+}
+
+bool operator==(const Tutor & lhs, const Tutor & rhs) {
+    return lhs.m_name == rhs.m_name;
+}
+
+bool operator<(const Tutor & lhs, const Tutor & rhs) {
+    return lhs.m_name < rhs.m_name;
+}
+
+bool operator>(const Tutor & lhs, const Tutor & rhs) {
+    return lhs.m_name > rhs.m_name;
+}
 
 #endif

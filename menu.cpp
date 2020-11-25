@@ -1,7 +1,7 @@
 //MCproj2 menu file
 
 #include <iostream>
-#include "tutor.hpp"
+#include "Tutor.hpp"
 
 void displayMainMenu() {
     std::cout << "===MENU===" << std::endl;

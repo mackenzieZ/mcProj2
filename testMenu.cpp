@@ -1,10 +1,9 @@
 //testing the main menu
 
-
-#include <iostream>
 #include "menu.cpp"
+#include "ExcelReader.cpp"
 
-int  main(int argc, char ** argv) {
+int main(int argc, char ** argv) {
     int primaryChoice, secondaryChoice, terteraryChoice;
 
     do {
@@ -28,9 +27,9 @@ int  main(int argc, char ** argv) {
                             std::cout << "Would you like to input their schedule or abilites at this time?'\n Please enter 'schedule', 'abilities', 'both' or 'neither' ";
                             std::cin >> decision;
                             if (decision == "schedule") {
-                                shift schedule[NUM_DAYS];
+                                Shift schedule[NUM_DAYS];
                                 for(int i = 0; i < NUM_DAYS; i++){
-                                    shift input;
+                                    Shift input;
                                     std::cout << "Start :";
                                     std::cin >> input.m_start;
                                     std::cout << "End: ";
@@ -75,7 +74,7 @@ int  main(int argc, char ** argv) {
                             }while(terteraryChoice != 0);
                         } break;
                         case 4: {
-
+                            LoadTutors("schedule.xlsx");
                         } break;
                     }
                 } while(secondaryChoice != 0);
