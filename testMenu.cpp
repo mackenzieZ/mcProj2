@@ -30,10 +30,15 @@ int main(int argc, char ** argv) {
                                 Shift schedule[NUM_DAYS];
                                 for(int i = 0; i < NUM_DAYS; i++){
                                     Shift input;
+                                    std::string start;
+                                    std::string end;
                                     std::cout << "Start :";
-                                    std::cin >> input.m_start;
+                                    std::cin >> start;
                                     std::cout << "End: ";
-                                    std::cin >> input.m_end;
+                                    std::cin >> end;
+
+                                    input.m_start = MCTime(start);
+                                    input.m_start = MCTime(end);
                                     schedule[i] = input; 
                                 }
                                 Tutor t1(n_name, cleared, schedule);
