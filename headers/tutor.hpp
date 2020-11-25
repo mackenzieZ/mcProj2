@@ -12,7 +12,7 @@
 
 #define NUM_DAYS 7
 
-struct shift{ shift(): m_start(0), m_end(0) {}
+struct shift{ shift() : m_start(0), m_end(0) {}
 
     int m_start;
     int m_end;
