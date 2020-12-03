@@ -11,6 +11,7 @@
 #include <memory>
 #include <vector>
 #include "MCTime.hpp"
+#include "WorkDayInfo.hpp"
 
 #define NUM_DAYS 7
 
@@ -20,11 +21,11 @@ enum Employee_Type {TUTOR, FD};
 struct Shift { 
     MCTime m_start;
     MCTime m_end;
-    int m_day;
+    Work_Day m_day;
 
-    Shift() : m_start(0), m_end(0), m_day(0) {}
+    Shift() : m_start(0), m_end(0), m_day(Work_Day(0)) {}
 
-    Shift(MCTime start, MCTime end, int day) : m_start(start), m_end(end), m_day(day) {};
+    Shift(MCTime start, MCTime end, Work_Day day) : m_start(start), m_end(end), m_day(day) {};
 
     std::string to_string() const {
         return "Day:" + std::to_string(m_day) + " Start: " + m_start.to_string() + " End: " + m_end.to_string() ;

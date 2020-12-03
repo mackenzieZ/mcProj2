@@ -4,7 +4,10 @@
 #include <set>
 #include <vector>
 #include <memory>
+#include <locale>
+#include <algorithm>
 #include "tutor.hpp"
+#include "WorkDayInfo.hpp"
 
 MCTime OPEN_TIME = MCTime("9:00");
 MCTime END_TIME = MCTime("19:00");
@@ -14,6 +17,8 @@ int excel_start_rows[] {3, 25, 47, 69, 91};
 
 using namespace OpenXLSX;
 
+// Analyzes the scheudle Excel sheet for information usch as on which line each of the days start
+std::vector<WorkDayInfo> analyzeScheduleSheet(XLWorksheet ws);
 // Function to search through the Excel file and find all the different tutors, then store them in a c++ set
 void findAllTutors(std::shared_ptr<std::vector<Tutor>> tutors, XLWorksheet ws);
 // Helper for the findAllTutors function
@@ -75,7 +80,7 @@ void findAllTutorShifts(std::shared_ptr<std::vector<Tutor>> tutors, XLWorksheet 
                     std::string name = cell.value().get<std::string>();
                     Tutor * tutor = findTutor(tutors, name);
                     if (tutor) {
-                        tutor->addShift(Shift(t, t.next(), i));
+                        tutor->addShift(Shift(t, t.next(), Work_Day(i)));
                     }
                 }
             }
@@ -96,3 +101,13 @@ Tutor * findTutor(std::shared_ptr<std::vector<Tutor>> tutors, std::string name) 
     return NULL;
 }
 
+std::vector<WorkDayInfo> analyzeScheduleSheet(XLWorksheet ws) {
+    // std::vector<WorkDayInfo> workdays;
+    // XLCellRange range = ws.range(XLCellReference("A1"), XLCellReference("Z200"));
+    // int day = 0;
+    // for (auto & cell : range) {
+    //     if (cell.valueType() == XLValueType::Empty) continue;
+    //     std::string str = cell.value().get<std::string>();
+    //     std::tolower(str);
+    // }
+}
