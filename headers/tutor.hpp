@@ -44,7 +44,6 @@ class Tutor {
     Tutor(std::string tutorName, bool cleared, Shift schedule[NUM_DAYS], std::map<std::string,bool> m):
     m_name(tutorName), m_cleared(cleared)
     {
-        std::cout << "this is the param ctor " << m_name << m_cleared << std::endl;
         m_abilities = m;
         m_schedule = std::shared_ptr<std::vector<Shift>>(new std::vector<Shift>);
     }

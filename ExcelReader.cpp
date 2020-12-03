@@ -4,7 +4,7 @@
 #include <set>
 #include <vector>
 #include <memory>
-#include "Tutor.hpp"
+#include "tutor.hpp"
 
 MCTime OPEN_TIME = MCTime("9:00");
 MCTime END_TIME = MCTime("19:00");

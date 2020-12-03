@@ -1,11 +1,11 @@
-#Mac make file, use 'make all'
+#Windows make file, use 'make all'
 
 TARGET = build/test
 OBJDIR = build/obj
 CXX = g++
 CXX_FLAGS = -std=c++17 -g
 LINK_FLAGS = -L'$(CURDIR)/OpenXLSX/build/output/' -lOpenXLSX-static -OpenXLSX-static
-COMP_FLAGS = -I'$(CURDIR)/OpenXLSX/library' -I'$(CURDIR)/OpenXLSX/build/library' -I'$(CURDIR)/headers'
+COMP_FLAGS = -I'$(CURDIR)/OpenXLSX/library' -I'$(CURDIR)/OpenXLSX/build/library' -I'$(CURDIR)/headers' 
 
 all: $(TARGET)
 

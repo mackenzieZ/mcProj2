@@ -3,20 +3,23 @@
 #include "menu.cpp"
 #include "ExcelReader.cpp"
 
+
 int main(int argc, char ** argv) {
     int primaryChoice, secondaryChoice, terteraryChoice;
-
+    std::shared_ptr<std::vector<Tutor>> tutorList;
     do {
         displayMainMenu();
         std::cin >> primaryChoice;
 
         switch (primaryChoice) {
-            case 1: {
+            case 1://Tutor Information Menu 
+            {
                 do {
                     tutorMenu();
                     std::cin >> secondaryChoice; 
                     switch(secondaryChoice){
-                        case 1: {
+                        case 1://add tutor
+                        {
                             std::string n_name;
                             std::string decision;
                             bool cleared;
@@ -27,50 +30,41 @@ int main(int argc, char ** argv) {
                             std::cout << "Would you like to input their schedule or abilites at this time?'\n Please enter 'schedule', 'abilities', 'both' or 'neither' ";
                             std::cin >> decision;
                             if (decision == "schedule") {
-                                Shift schedule[NUM_DAYS];
-                                for(int i = 0; i < NUM_DAYS; i++){
-                                    Shift input;
-                                    std::string start;
-                                    std::string end;
-                                    std::cout << "Start :";
-                                    std::cin >> start;
-                                    std::cout << "End: ";
-                                    std::cin >> end;
-
-                                    input.m_start = MCTime(start);
-                                    input.m_start = MCTime(end);
-                                    schedule[i] = input; 
-                                }
-                                Tutor t1(n_name, cleared, schedule);
+                                Shift * initial_schedule = scheduleMenuOption();
+                                Tutor t1(n_name, cleared, initial_schedule);
                             } else if(decision == "abilities") {
                                 Tutor t1(n_name, cleared);
-                                int j;
-                                std::string key;
-                                bool change;
-                                do{
-                                    std::cout << "What class would you like to enter abilities for(all abilities defaulted to false)? ";
-                                    std::cin >> key;
-                                    std::cout << "Change abilities? yes capable - 1, not capable - 0 ";
-                                    std::cin >>  change;
-                                    t1.changeAbilities(key,change);
-                                    std::cout << "To end entering abilities enter 5 else press any number" << std::endl;
-                                    std::cin >> j;
-                                }while(j != 5);
+                                abilitiesMenuOption(t1);
                             } else if(decision == "both") {
-                                //enter both
+                                Shift * initial_schedule = scheduleMenuOption();
+                                Tutor t1(n_name, cleared, initial_schedule);
+                                abilitiesMenuOption(t1);
                             } else if(decision == "neither") {
                                 Tutor t1(n_name, cleared);
                             }
                             std::cout << "Tutor added" << std::endl;
-                        } break; //add tutor
-                        case 2:{
-                        } break; //remove tutor
+                        } break;
+                        case 2://remove tutor
+                        {
+                        } break;
                         case 3:{
+                            //checking to see if there are tutors in the list to edit
+                            if(tutorList == NULL){
+                                std::cout << "There are no tutors to edit, add tutor to edit" << std::endl;
+                                break;
+                            }
+                            //else display menu to edit tutor
                             do{
                                 editTutorMenu();
+                                std::string tutorToEdit;
                                 std::cin >> terteraryChoice;
+                                std::cout << "Enter the Tutor's Name you wish to edit" << std::endl;
+                                std::cin >> tutorToEdit;
                                 if(terteraryChoice == 1){
                                     //edit schedule
+                                    //tutorList = global object for 
+                                    findTutor(tutorList, tutorToEdit)->displaySchedule();
+                                    
                                 }else if(terteraryChoice == 2){
                                     //edit abilities
                                 }else{
@@ -84,11 +78,14 @@ int main(int argc, char ** argv) {
                     }
                 } while(secondaryChoice != 0);
             } break;  
-            case 2:{}break;
-            case 3:{}break;
+            case 2://Course Information
+            {}break;
+            case 3://Generate Review
+            {}break;
         }
     } while(primaryChoice != 0);
     
 
     return 0;
 }
+

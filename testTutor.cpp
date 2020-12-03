@@ -8,12 +8,11 @@ using namespace std;
 int main()
 {
     std::cout << "Test" << std::endl;
-    shift schedule[7];
+    Shift schedule[7];
     
     
-    shift s1;
-    s1.m_start = 12;
-    s1.m_end = 4;
+    Shift s1;
+ 
 
     s1.printShift();
 
