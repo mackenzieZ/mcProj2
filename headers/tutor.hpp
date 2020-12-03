@@ -101,6 +101,10 @@ class Tutor {
         // }
     }
 
+    //===== Functions to implement later ======
+    //find tutor in list based on name
+    
+
     void printAbilities()
     {
         for (auto const& pair: m_abilities) {
