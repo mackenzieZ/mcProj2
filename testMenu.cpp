@@ -6,7 +6,7 @@
 
 int main(int argc, char ** argv) {
     int primaryChoice, secondaryChoice, terteraryChoice;
-    std::shared_ptr<std::vector<Tutor>> tutorList;
+    std::shared_ptr<std::vector<Tutor>> tutorList(new std::vector<Tutor>);
     do {
         displayMainMenu();
         std::cin >> primaryChoice;
@@ -92,7 +92,7 @@ int main(int argc, char ** argv) {
                             }while(terteraryChoice != 0);
                         } break;
                         case 4: {
-                            LoadTutors("schedule.xlsx");
+                            tutorList = LoadTutors(tutorList, "schedule.xlsx");
                         } break;
                     }
                 } while(secondaryChoice != 0);
