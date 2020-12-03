@@ -65,8 +65,6 @@ class Tutor {
     }
 
     void addShift(Shift newshift){
-        // m_schedule[index-1] = newshift;
-        // newshift.printShift();
         m_schedule->push_back(newshift);
         std::cout << m_name << " Shift Added - " << newshift.to_string() << "\n"; 
     }
@@ -105,7 +103,7 @@ class Tutor {
 
     //===== Functions to implement later ======
     //find tutor in list based on name
-    
+    //display all tutors in list 
 
     void printAbilities()
     {
