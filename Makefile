@@ -1,4 +1,4 @@
-#Windows make file, use 'make all'
+#Make file, use 'make all'
 
 TARGET = build/test
 OBJDIR = build/obj

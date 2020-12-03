@@ -23,11 +23,9 @@ void findAllTutorShifts(std::shared_ptr<std::vector<Tutor>> tutors, XLWorksheet 
 // Functions that returns pointer to a tutor given their name
 Tutor * findTutor(std::shared_ptr<std::vector<Tutor>> tutors, std::string name);
 
-std::shared_ptr<std::vector<Tutor>> LoadTutors(char * file_name) {
+std::shared_ptr<std::vector<Tutor>> LoadTutors(std::shared_ptr<std::vector<Tutor>> tutors, char * file_name) {
     XLDocument doc(file_name);
     XLWorksheet ws = doc.workbook().worksheet("Lab Schedule");
-
-    auto tutors = std::shared_ptr<std::vector<Tutor>>(new std::vector<Tutor>);
 
     // Find all tutors from schedule file then print them out
     findAllTutors(tutors, ws);

@@ -14,6 +14,8 @@
 
 #define NUM_DAYS 7
 
+enum Employee_Type {TUTOR, FD};
+
 // All shifts now represent a 30 min interval, a tutor has multiple shifts a day
 struct Shift { 
     MCTime m_start;
@@ -41,21 +43,21 @@ class Tutor {
         defaultAbilities();
     }
 
-    Tutor(std::string tutorName, bool cleared, Shift schedule[NUM_DAYS], std::map<std::string,bool> m):
-    m_name(tutorName), m_cleared(cleared)
+    Tutor(std::string tutorName, bool cleared, Shift schedule[NUM_DAYS], std::map<std::string,bool> m, Employee_Type type = Employee_Type::TUTOR):
+    m_name(tutorName), m_cleared(cleared), m_type(type)
     {
         m_abilities = m;
         m_schedule = std::shared_ptr<std::vector<Shift>>(new std::vector<Shift>);
     }
 
-    Tutor(std::string tutorName, bool cleared, Shift schedule[NUM_DAYS]):
-    m_name(tutorName), m_cleared(cleared)
+    Tutor(std::string tutorName, bool cleared, Shift schedule[NUM_DAYS], Employee_Type type = Employee_Type::TUTOR):
+    m_name(tutorName), m_cleared(cleared), m_type(type)
     {
         defaultAbilities();
         m_schedule = std::shared_ptr<std::vector<Shift>>(new std::vector<Shift>);
     }
-    Tutor(std::string tutorName, bool cleared):
-    m_name(tutorName), m_cleared(cleared)
+    Tutor(std::string tutorName, bool cleared, Employee_Type type = Employee_Type::TUTOR):
+    m_name(tutorName), m_cleared(cleared), m_type(type)
     {
         defaultSchedule();
         defaultAbilities();
@@ -127,7 +129,8 @@ class Tutor {
     private:
     std::string m_name;
     bool m_cleared;
-
+    
+    Employee_Type m_type;
     std::shared_ptr<std::vector<Shift>> m_schedule;
     std::map<std::string, bool> m_abilities;
 
