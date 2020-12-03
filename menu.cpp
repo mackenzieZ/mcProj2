@@ -26,14 +26,17 @@ void abilitiesMenuOption(Tutor t1){
     std::string key;
     bool change;
     do{
-        std::cout << "What class would you like to enter abilities for(all abilities defaulted to false)? ";
+        std::cout << "What class would you like to enter abilities for (all abilities defaulted to false)? ";
         std::cin >> key;
+        std::cout << "The current ability for this tutor for this class is: "  <<  std::endl; // add get abilities function
         std::cout << "Change abilities? yes capable - 1, not capable - 0 ";
         std::cin >>  change;
         t1.changeAbilities(key,change);
-        std::cout << "To end entering abilities enter 5 else press any number" << std::endl;
+        std::cout << "Here are the abilities for " << t1.getName() << std::endl;
+        t1.printAbilities();
+        std::cout << "Would you like to continue entering abilities? 1- yes 0 - no" << std::endl;
         std::cin >> j;
-    }while(j != 5);    
+    }while(j != 0);    
 }
 
 Shift * scheduleMenuOption(){

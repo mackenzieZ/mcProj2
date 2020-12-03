@@ -21,27 +21,44 @@ int main(int argc, char ** argv) {
                         case 1://add tutor
                         {
                             std::string n_name;
-                            std::string decision;
+                            int decision;
                             bool cleared;
                             std::cout << "New Name: ";
                             std::cin >> n_name;
                             std::cout << "Are they able to lead RS? 1 - yes, 0 - no ";
                             std::cin >> cleared;
-                            std::cout << "Would you like to input their schedule or abilites at this time?'\n Please enter 'schedule', 'abilities', 'both' or 'neither' ";
+                            std::cout << "Would you like to input their schedule or abilites at this time?'\n Please enter 1- schedule, 2 - abilities, 3 - both, 0 - neither";
                             std::cin >> decision;
-                            if (decision == "schedule") {
+                            switch(decision){
+                                //need a way to add these new tutors to the tutorlist
+                                case 1://manual entering schedule
+                                {
                                 Shift * initial_schedule = scheduleMenuOption();
                                 Tutor t1(n_name, cleared, initial_schedule);
-                            } else if(decision == "abilities") {
-                                Tutor t1(n_name, cleared);
-                                abilitiesMenuOption(t1);
-                            } else if(decision == "both") {
+                                
+                                }break;
+                                case 2://manual entering abilities
+                                {
+                                //testing push_back function
+                                
+                                //Tutor manualTutorEntry(n_name, cleared);
+                                //abilitiesMenuOption(manualTutorEntry);
+                                //tutorList->push_back(manualTutorEntry);
+
+                                }break;
+                                case 3://entering both manually
+                                {
                                 Shift * initial_schedule = scheduleMenuOption();
                                 Tutor t1(n_name, cleared, initial_schedule);
                                 abilitiesMenuOption(t1);
-                            } else if(decision == "neither") {
+                                }break;
+                                case 0://entering neither
+                                {
                                 Tutor t1(n_name, cleared);
+                                tutorList->push_back(t1);
+                                }break;
                             }
+
                             std::cout << "Tutor added" << std::endl;
                         } break;
                         case 2://remove tutor
@@ -60,6 +77,7 @@ int main(int argc, char ** argv) {
                                 std::cin >> terteraryChoice;
                                 std::cout << "Enter the Tutor's Name you wish to edit" << std::endl;
                                 std::cin >> tutorToEdit;
+
                                 if(terteraryChoice == 1){
                                     //edit schedule
                                     //tutorList = global object for 
@@ -67,6 +85,7 @@ int main(int argc, char ** argv) {
                                     
                                 }else if(terteraryChoice == 2){
                                     //edit abilities
+                                    
                                 }else{
                                     std::cout << "Invalid entry" << std::endl;
                                 }
