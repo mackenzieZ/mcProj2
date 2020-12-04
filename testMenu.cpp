@@ -33,17 +33,20 @@ int main(int argc, char ** argv) {
                                 //need a way to add these new tutors to the tutorlist
                                 case 1://manual entering schedule
                                 {
-                                Shift * initial_schedule = scheduleMenuOption();
-                                Tutor t1(n_name, cleared, initial_schedule);
+                                    int start, end;
+                                    std::cout << "Start :";
+                                    std::cin >> start;
+                                    std::cout << "End: ";
+                                    std::cin >> end;
+                                    int lengthofShift = shiftLength(start, end);
+                                    std::cout << "Shift Length = " << lengthofShift << std::endl; 
                                 
                                 }break;
                                 case 2://manual entering abilities
                                 {
-                                //testing push_back function
-                                
-                                //Tutor manualTutorEntry(n_name, cleared);
-                                //abilitiesMenuOption(manualTutorEntry);
-                                //tutorList->push_back(manualTutorEntry);
+                                Tutor manualTutorEntry(n_name, cleared);
+                                abilitiesMenuOption(manualTutorEntry);
+                                tutorList->push_back(manualTutorEntry);
 
                                 }break;
                                 case 3://entering both manually
