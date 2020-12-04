@@ -2,7 +2,7 @@
 
 #include "MCTime.hpp"
 
-enum Work_Day {MONDAY, TUESDAY, WEDNESDAY, THURSDAY, FRIDAY, SUNDAY};
+enum Work_Day {MONDAY, TUESDAY, WEDNESDAY, THURSDAY, FRIDAY, SATURDAY, SUNDAY};
 
 struct WorkDayInfo {
     Work_Day m_day;

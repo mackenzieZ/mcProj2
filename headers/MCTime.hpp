@@ -12,14 +12,22 @@ struct MCTime {
     MCTime(int hour, int min) : m_hour(hour), m_min(min) {};
     // Constructor that takes in a time string like 3:20
     MCTime(std::string time_string) {
-        std::istringstream ss(time_string);
+        if (time_string.find(':') == std::string::npos) {
+            m_hour = std::stoi(time_string);
+            m_min = 0;
+        }
+        else {
+            std::istringstream ss(time_string);
 
-        std::string token;
-        std::getline(ss, token, ':');
-        m_hour = std::stoi(token);
+            std::string token;
+            std::getline(ss, token, ':');
+            std::cout << token << "\n";
+            m_hour = std::stoi(token);
 
-        std::getline(ss, token, ':');
-        m_min = std::stoi(token);
+            std::getline(ss, token, ':');
+            std::cout << token << "\n";
+            m_min = std::stoi(token);
+        }
     };
     
     std::string to_string() const {

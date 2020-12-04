@@ -4,7 +4,6 @@
 #include <set>
 #include <vector>
 #include <memory>
-#include <locale>
 #include <algorithm>
 #include "tutor.hpp"
 #include "WorkDayInfo.hpp"
@@ -31,6 +30,13 @@ Tutor * findTutor(std::shared_ptr<std::vector<Tutor>> tutors, std::string name);
 std::shared_ptr<std::vector<Tutor>> LoadTutors(std::shared_ptr<std::vector<Tutor>> tutors, char * file_name) {
     XLDocument doc(file_name);
     XLWorksheet ws = doc.workbook().worksheet("Lab Schedule");
+
+    std::vector<WorkDayInfo> days = analyzeScheduleSheet(ws);
+    for (WorkDayInfo day : days) {
+        std::cout << day.m_day << " " << day.m_openTime << " - " << day.m_closeTime << "\n";
+    }
+
+    return NULL;
 
     // Find all tutors from schedule file then print them out
     findAllTutors(tutors, ws);
@@ -102,12 +108,54 @@ Tutor * findTutor(std::shared_ptr<std::vector<Tutor>> tutors, std::string name) 
 }
 
 std::vector<WorkDayInfo> analyzeScheduleSheet(XLWorksheet ws) {
-    // std::vector<WorkDayInfo> workdays;
-    // XLCellRange range = ws.range(XLCellReference("A1"), XLCellReference("Z200"));
-    // int day = 0;
-    // for (auto & cell : range) {
-    //     if (cell.valueType() == XLValueType::Empty) continue;
-    //     std::string str = cell.value().get<std::string>();
-    //     std::tolower(str);
-    // }
+    std::vector<WorkDayInfo> workdays;
+    workdays.clear();
+    XLCellRange range = ws.range(XLCellReference("A1"), XLCellReference("A200"));
+    for (auto & cell : range) {
+        if (cell.valueType() == XLValueType::Empty) continue;
+        std::string str = cell.value().get<std::string>();
+        std::transform(str.begin(), str.end(), str.begin(), ::tolower);
+        Work_Day day;
+        if (str == "monday") {
+            day = Work_Day::MONDAY;
+        }
+        else if (str == "tuesday") {
+            day = Work_Day::TUESDAY;
+        }
+        else if (str == "wednesday") {
+            day = Work_Day::WEDNESDAY;
+        }
+        else if (str == "thursday") {
+            day = Work_Day::THURSDAY;
+        }
+        else if (str == "friday") {
+            day = Work_Day::FRIDAY;
+        }
+        else if (str == "saturday") {
+            day = Work_Day::SATURDAY;
+        }
+        else if (str == "sunday") {
+            day = Work_Day::SUNDAY;
+        }
+        else {
+            continue;
+        }
+
+        int startRow = cell.cellReference().row() + 1;
+        std::string startStr = ws.cell(startRow, 1).value().asString();
+        MCTime start(startStr.substr(0, startStr.find("-")));
+        MCTime end(0, 0);
+        for (int r = startRow; ws.cell(r, 1).value().asString() != ""; r++) {
+            if (ws.cell(r+1, 1).value().asString() == "") {
+                std::string endStr = ws.cell(r, 1).value().asString();
+                size_t pos = endStr.find("-");
+                endStr.erase(0, pos + 1);
+                end = MCTime(endStr);
+            }
+        }
+
+        workdays.push_back(WorkDayInfo(day, start, end, startRow));
+    }
+
+    return workdays;
 }
