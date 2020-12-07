@@ -27,20 +27,16 @@ int main(int argc, char ** argv) {
                             std::cin >> n_name;
                             std::cout << "Are they able to lead RS? 1 - yes, 0 - no ";
                             std::cin >> cleared;
-                            std::cout << "Would you like to input their schedule or abilites at this time?'\n Please enter 1- schedule, 2 - abilities, 3 - both, 0 - neither";
+                            std::cout << "Would you like to input their schedule or abilites at this time?'\n Please enter 1- schedule, 2 - abilities, 3 - both, 0 - neither: ";
                             std::cin >> decision;
                             switch(decision){
                                 //need a way to add these new tutors to the tutorlist
                                 case 1://manual entering schedule
                                 {
-                                    int start, end;
-                                    std::cout << "Start :";
-                                    std::cin >> start;
-                                    std::cout << "End: ";
-                                    std::cin >> end;
-                                    int lengthofShift = shiftLength(start, end);
-                                    std::cout << "Shift Length = " << lengthofShift << std::endl; 
-                                
+                                std::cout << "test 1\n";
+                                Shift * initial_schedule = scheduleMenuOption();
+                                Tutor t1(n_name, cleared, initial_schedule);
+                                tutorList->push_back(t1);
                                 }break;
                                 case 2://manual entering abilities
                                 {
@@ -54,6 +50,7 @@ int main(int argc, char ** argv) {
                                 Shift * initial_schedule = scheduleMenuOption();
                                 Tutor t1(n_name, cleared, initial_schedule);
                                 abilitiesMenuOption(t1);
+                                tutorList->push_back(t1);
                                 }break;
                                 case 0://entering neither
                                 {
