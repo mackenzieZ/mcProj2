@@ -103,8 +103,8 @@ class Tutor {
     }
 
     //===== Functions to implement later ======
-    //find tutor in list based on name
     //display all tutors in list 
+    //export the vector to an excel file to be read in again
 
     void printAbilities()
     {
