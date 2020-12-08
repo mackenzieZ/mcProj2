@@ -77,6 +77,25 @@ int main(int argc, char ** argv) {
                         } break;
                         case 2://remove tutor
                         {
+                            std::string tutorToRemove;
+                            int position;
+                            if(tutorList == NULL){
+                                std::cout << "There are no tutors to remove" << std::endl;
+                                break;
+                            }
+                            std::cout << "Enter the Tutor's Name you wish to remove:" << std::endl;
+                            std::cin >> tutorToRemove;
+                            //find location of said tutor in list and return position * 1 = pos rn**
+                            position = findPosition(tutorList, tutorToRemove);
+                            if(position >= 0){
+                                tutorList->erase(tutorList->begin()+position);
+                                std::cout << position << std::endl;
+                                std::cout << "Staff member removed" << std::endl;
+                            }else{
+                                std::cout << "Staff member not found in list; unable to remove" << std::endl;
+                            }
+
+
                         } break;
                         case 3:{
                             //checking to see if there are tutors in the list to edit

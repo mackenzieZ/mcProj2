@@ -62,3 +62,14 @@ void scheduleMenuOption(std::shared_ptr<std::vector<Shift>> schedule){
         schedule->push_back(input);
     }
 }
+
+int findPosition(std::shared_ptr<std::vector<Tutor>> tutors, std::string name) {
+    int count = 0;
+    for (std::vector<Tutor>::iterator itr = tutors->begin(); itr != tutors->end(); itr++, count++) 
+    {
+        if ((*itr).getName() == name) {
+            return count;
+        }
+    }
+    return -1;
+}
