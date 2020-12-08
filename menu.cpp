@@ -73,3 +73,10 @@ int findPosition(std::shared_ptr<std::vector<Tutor>> tutors, std::string name) {
     }
     return -1;
 }
+
+void displayTutors(std::shared_ptr<std::vector<Tutor>> tutors){
+    for (std::vector<Tutor>::iterator itr = tutors->begin(); itr != tutors->end(); itr++){
+        std::cout << *itr << std::endl;
+        //*itr.displaySchedule();
+    }
+}

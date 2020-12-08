@@ -99,12 +99,11 @@ int main(int argc, char ** argv) {
                             position = findPosition(tutorList, tutorToRemove);
                             if(position >= 0){
                                 tutorList->erase(tutorList->begin()+position);
-                                std::cout << position << std::endl;
                                 std::cout << "Staff member removed" << std::endl;
                             }else{
                                 std::cout << "Staff member not found in list; unable to remove" << std::endl;
                             }
-
+                            
 
                         } break;
                         case 3:{
@@ -145,7 +144,9 @@ int main(int argc, char ** argv) {
                 } while(secondaryChoice != 0);
             } break;  
             case 2://Course Information
-            {}break;
+            {
+                displayTutors(tutorList);
+            }break;
             case 3://Generate Review
             {}break;
         }
