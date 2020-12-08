@@ -8,11 +8,11 @@
 #include "tutor.hpp"
 #include "WorkDayInfo.hpp"
 
-MCTime OPEN_TIME = MCTime("9:00");
-MCTime END_TIME = MCTime("19:00");
-MCTime END_TIME_FRI = MCTime("16:00");
+// MCTime OPEN_TIME = MCTime("9:00");
+// MCTime END_TIME = MCTime("19:00");
+// MCTime END_TIME_FRI = MCTime("16:00");
 
-int excel_start_rows[] {3, 25, 47, 69, 91};
+// int excel_start_rows[] {3, 25, 47, 69, 91};
 
 using namespace OpenXLSX;
 
@@ -23,7 +23,7 @@ void findAllTutors(std::shared_ptr<std::vector<Tutor>> tutors, XLWorksheet ws);
 // Helper for the findAllTutors function
 void findAllTutorsInRange(std::shared_ptr<std::set<Tutor>> tutors, XLWorksheet ws, XLCellRange range);
 // Go through the Excel file and find all the shifts and add them to the correct tutor
-void findAllTutorShifts(std::shared_ptr<std::vector<Tutor>> tutors, XLWorksheet ws);
+void findAllTutorShifts(std::shared_ptr<std::vector<Tutor>> tutors, XLWorksheet ws, const std::vector<WorkDayInfo> & days);
 // Functions that returns pointer to a tutor given their name
 Tutor * findTutor(std::shared_ptr<std::vector<Tutor>> tutors, std::string name);
 
@@ -31,12 +31,8 @@ std::shared_ptr<std::vector<Tutor>> LoadTutors(std::shared_ptr<std::vector<Tutor
     XLDocument doc(file_name);
     XLWorksheet ws = doc.workbook().worksheet("Lab Schedule");
 
+    // Read work week information from excel file
     std::vector<WorkDayInfo> days = analyzeScheduleSheet(ws);
-    for (WorkDayInfo day : days) {
-        std::cout << day.m_day << " " << day.m_openTime << " - " << day.m_closeTime << "\n";
-    }
-
-    return NULL;
 
     // Find all tutors from schedule file then print them out
     findAllTutors(tutors, ws);
@@ -47,7 +43,7 @@ std::shared_ptr<std::vector<Tutor>> LoadTutors(std::shared_ptr<std::vector<Tutor
     }
 
     // Assign the tutors their proper shifts
-    findAllTutorShifts(tutors, ws);
+    findAllTutorShifts(tutors, ws, days);
 
     return tutors;
 }
@@ -75,13 +71,13 @@ void findAllTutorsInRange(std::shared_ptr<std::set<Tutor>> tutors, XLWorksheet w
     }
 }
 
-void findAllTutorShifts(std::shared_ptr<std::vector<Tutor>> tutors, XLWorksheet ws) {
+void findAllTutorShifts(std::shared_ptr<std::vector<Tutor>> tutors, XLWorksheet ws, const std::vector<WorkDayInfo> & days) {
     for (int i = 0; i < 5; i++) {
         int shiftCount = 0;
-        MCTime t = OPEN_TIME;
-        while (!(t == (i < 4 ? END_TIME : END_TIME_FRI))) {
+        MCTime t = days[i].m_openTime;
+        while (!(t == days[i].m_closeTime)) {
             for (int c = 1; c < 20; c++) {
-                auto cell = ws.cell(XLCellReference(excel_start_rows[i] + shiftCount, c));
+                auto cell = ws.cell(XLCellReference(days[i].m_excelStartRow + shiftCount, c));
                 if (cell.value().valueType() == XLValueType::String) {
                     std::string name = cell.value().get<std::string>();
                     Tutor * tutor = findTutor(tutors, name);
@@ -150,7 +146,7 @@ std::vector<WorkDayInfo> analyzeScheduleSheet(XLWorksheet ws) {
                 std::string endStr = ws.cell(r, 1).value().asString();
                 size_t pos = endStr.find("-");
                 endStr.erase(0, pos + 1);
-                end = MCTime(endStr);
+                end = MCTime(endStr).pm();
             }
         }
 

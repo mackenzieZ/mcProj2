@@ -37,6 +37,28 @@ struct MCTime {
     MCTime next() {
         return m_min < 30 ? MCTime(m_hour, 30) : MCTime(m_hour + 1, 0);
     }
+
+    MCTime am() {
+        return *this;
+    }
+
+    MCTime pm() {
+        return add(12, 0);
+    }
+
+    MCTime add(int hr, int min) {
+        int newHr = m_hour + hr;
+        int newMin = m_min + min;
+        
+        if (newMin >= 60) {
+            newMin -= 60;
+            newHr++;
+        }
+        if (newHr > 24) {
+            newHr -= 24;
+        }
+        return MCTime(newHr, newMin);
+    }
 };
 
 std::ostream & operator<<(std::ostream & os, MCTime time) {
