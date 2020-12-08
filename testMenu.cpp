@@ -25,6 +25,10 @@ int main(int argc, char ** argv) {
                             bool cleared;
                             std::cout << "New Name: ";
                             std::cin >> n_name;
+                            if(findTutor(tutorList, n_name) != NULL){
+                                std::cout << "Staff Name Already taken - try again" << std::endl;
+                                break;
+                            }
                             std::cout << "Are they a tutor or FD staff? 1 - Tutor, 0 - FD ";
                             std::cin >> type;
                             std::cout << "Are they able to lead RS? 1 - yes, 0 - no ";
@@ -44,7 +48,7 @@ int main(int argc, char ** argv) {
                                 {
                                 if(type == 0){
                                     std::cout << "The Staff member you added is a FD and does not have tutor abilities" << std::endl;
-                                    Tutor manualTutorEntry(n_name, cleared);
+                                    Tutor manualTutorEntry(n_name, cleared, Employee_Type::FD);
                                     tutorList->push_back(manualTutorEntry);
                                     break;
                                 }
@@ -57,17 +61,23 @@ int main(int argc, char ** argv) {
                                 {
                                 std::shared_ptr<std::vector<Shift>> initial_schedule(new std::vector<Shift>);
                                 scheduleMenuOption(initial_schedule);
-                                Tutor t1(n_name, cleared, initial_schedule);
                                 if(type == 0){
                                     std::cout << "The Staff member you added is a FD and does not have tutor abilities" << std::endl;
+                                    Tutor t1(n_name, cleared, initial_schedule, Employee_Type::FD);
                                     tutorList->push_back(t1);
                                     break;
                                 }
+                                Tutor t1(n_name, cleared, initial_schedule);
                                 abilitiesMenuOption(t1);
                                 tutorList->push_back(t1);
                                 }break;
                                 case 0://entering neither
                                 {
+                                if(type == 0){
+                                    Tutor t1(n_name, cleared, Employee_Type::FD);
+                                    tutorList->push_back(t1);
+                                    break;
+                                }
                                 Tutor t1(n_name, cleared);
                                 tutorList->push_back(t1);
                                 }break;
@@ -79,7 +89,7 @@ int main(int argc, char ** argv) {
                         {
                             std::string tutorToRemove;
                             int position;
-                            if(tutorList == NULL){
+                            if(tutorList->empty()){
                                 std::cout << "There are no tutors to remove" << std::endl;
                                 break;
                             }
@@ -99,7 +109,8 @@ int main(int argc, char ** argv) {
                         } break;
                         case 3:{
                             //checking to see if there are tutors in the list to edit
-                            if(tutorList == NULL){
+                            //Does not work
+                            if(tutorList->empty()){
                                 std::cout << "There are no tutors to edit, add tutor to edit" << std::endl;
                                 break;
                             }
@@ -110,14 +121,17 @@ int main(int argc, char ** argv) {
                                 std::cin >> terteraryChoice;
                                 std::cout << "Enter the Tutor's Name you wish to edit" << std::endl;
                                 std::cin >> tutorToEdit;
+                                if(findTutor(tutorList, tutorToEdit) == NULL){
+                                    std::cout << "This tutor does not exist on the list" << std::endl;
+                                }
 
                                 if(terteraryChoice == 1){
                                     //edit schedule
-                                    //tutorList = global object for 
                                     findTutor(tutorList, tutorToEdit)->displaySchedule();
                                     
                                 }else if(terteraryChoice == 2){
                                     //edit abilities
+                                    findTutor(tutorList, tutorToEdit)->printAbilities();
                                     
                                 }else{
                                     std::cout << "Invalid entry" << std::endl;
