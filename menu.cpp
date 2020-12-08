@@ -39,16 +39,11 @@ void abilitiesMenuOption(Tutor t1){
     }while(j != 0);    
 }
 
-Shift * scheduleMenuOption(){
-    std::cout << "test2\n";
-    Shift * schedule[NUM_DAYS];
-    std::cout << "test3\n";
+void scheduleMenuOption(std::shared_ptr<std::vector<Shift>> schedule){
     for(int i = 0; i < NUM_DAYS; i++){
         int hour_s, hour_e, min_s, min_e;
-        std::cout << "test\n";
-        Work_Day day;
-        std::cout << "test\n";
-        std::cout << "Enter start time (hour): ";
+        std::cout << Work_Day(i)<< std::endl; 
+        std::cout << "Enter start time  (hour): ";
         std::cin >> hour_s;
  
         std::cout << "Enter start time (minutes): ";       
@@ -63,9 +58,7 @@ Shift * scheduleMenuOption(){
         MCTime start(hour_s, min_s);
         MCTime end(hour_e, min_e);
 
-        std::cout << "test\n";
-        Shift input(start, end, day);
-        schedule * = input; 
+        Shift input(start, end, Work_Day(i));
+        schedule->push_back(input);
     }
-    return schedule;
 }

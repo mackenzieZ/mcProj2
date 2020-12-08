@@ -33,8 +33,8 @@ int main(int argc, char ** argv) {
                                 //need a way to add these new tutors to the tutorlist
                                 case 1://manual entering schedule
                                 {
-                                std::cout << "test 1\n";
-                                Shift * initial_schedule = scheduleMenuOption();
+                                std::shared_ptr<std::vector<Shift>> initial_schedule(new std::vector<Shift>);
+                                scheduleMenuOption(initial_schedule);
                                 Tutor t1(n_name, cleared, initial_schedule);
                                 tutorList->push_back(t1);
                                 }break;
@@ -47,7 +47,8 @@ int main(int argc, char ** argv) {
                                 }break;
                                 case 3://entering both manually
                                 {
-                                Shift * initial_schedule = scheduleMenuOption();
+                                std::shared_ptr<std::vector<Shift>> initial_schedule(new std::vector<Shift>);
+                                scheduleMenuOption(initial_schedule);
                                 Tutor t1(n_name, cleared, initial_schedule);
                                 abilitiesMenuOption(t1);
                                 tutorList->push_back(t1);

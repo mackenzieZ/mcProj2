@@ -44,14 +44,14 @@ class Tutor {
         defaultAbilities();
     }
 
-    Tutor(std::string tutorName, bool cleared, Shift schedule[NUM_DAYS], std::map<std::string,bool> m, Employee_Type type = Employee_Type::TUTOR):
+    Tutor(std::string tutorName, bool cleared, std::shared_ptr<std::vector<Shift>> schedule, std::map<std::string,bool> m, Employee_Type type = Employee_Type::TUTOR):
     m_name(tutorName), m_cleared(cleared), m_type(type)
     {
         m_abilities = m;
         m_schedule = std::shared_ptr<std::vector<Shift>>(new std::vector<Shift>);
     }
 
-    Tutor(std::string tutorName, bool cleared, Shift * schedule, Employee_Type type = Employee_Type::TUTOR):
+    Tutor(std::string tutorName, bool cleared, std::shared_ptr<std::vector<Shift>> schedule, Employee_Type type = Employee_Type::TUTOR):
     m_name(tutorName), m_cleared(cleared), m_type(type)
     {
         defaultAbilities();
