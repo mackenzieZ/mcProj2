@@ -18,13 +18,15 @@ int main(int argc, char ** argv) {
                     tutorMenu();
                     std::cin >> secondaryChoice; 
                     switch(secondaryChoice){
-                        case 1://add tutor
+                        case 1://add staff
                         {
                             std::string n_name;
-                            int decision;
+                            int decision, type;
                             bool cleared;
                             std::cout << "New Name: ";
                             std::cin >> n_name;
+                            std::cout << "Are they a tutor or FD staff? 1 - Tutor, 0 - FD ";
+                            std::cin >> type;
                             std::cout << "Are they able to lead RS? 1 - yes, 0 - no ";
                             std::cin >> cleared;
                             std::cout << "Would you like to input their schedule or abilites at this time?'\n Please enter 1- schedule, 2 - abilities, 3 - both, 0 - neither: ";
@@ -40,6 +42,12 @@ int main(int argc, char ** argv) {
                                 }break;
                                 case 2://manual entering abilities
                                 {
+                                if(type == 0){
+                                    std::cout << "The Staff member you added is a FD and does not have tutor abilities" << std::endl;
+                                    Tutor manualTutorEntry(n_name, cleared);
+                                    tutorList->push_back(manualTutorEntry);
+                                    break;
+                                }
                                 Tutor manualTutorEntry(n_name, cleared);
                                 abilitiesMenuOption(manualTutorEntry);
                                 tutorList->push_back(manualTutorEntry);
@@ -50,6 +58,11 @@ int main(int argc, char ** argv) {
                                 std::shared_ptr<std::vector<Shift>> initial_schedule(new std::vector<Shift>);
                                 scheduleMenuOption(initial_schedule);
                                 Tutor t1(n_name, cleared, initial_schedule);
+                                if(type == 0){
+                                    std::cout << "The Staff member you added is a FD and does not have tutor abilities" << std::endl;
+                                    tutorList->push_back(t1);
+                                    break;
+                                }
                                 abilitiesMenuOption(t1);
                                 tutorList->push_back(t1);
                                 }break;
@@ -60,7 +73,7 @@ int main(int argc, char ** argv) {
                                 }break;
                             }
 
-                            std::cout << "Tutor added" << std::endl;
+                            std::cout << "Staff member added" << std::endl;
                         } break;
                         case 2://remove tutor
                         {
