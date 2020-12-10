@@ -114,13 +114,10 @@ class Tutor {
     // Getters
     std::string getName() const { return m_name; }
 
-<<<<<<< HEAD
     std::shared_ptr<std::vector<Shift>> getSchedule() const {return m_schedule; }
 
-=======
     Employee_Type getType() const { return m_type;}
     
->>>>>>> 99d7e89aed1e6dadcc36a7c04c3f055395881245
     // Operators needed for compatibilty sake
     friend bool operator==(const Tutor & lhs, const Tutor & rhs);
 
