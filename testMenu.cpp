@@ -1,14 +1,12 @@
 //testing the main menu
 
 #include "menu.cpp"
-// #include "ExcelReader.cpp"
 #include "FileHandler.hpp"
 
 
 int main(int argc, char ** argv) {
     int primaryChoice, secondaryChoice, terteraryChoice;
     std::shared_ptr<std::vector<Tutor>> tutorList(new std::vector<Tutor>);
-    std::cout << "hi";
     FileHandler fileHandler(tutorList, "schedule.xlsx");
 
     do {
@@ -142,8 +140,11 @@ int main(int argc, char ** argv) {
                             }while(terteraryChoice != 0);
                         } break;
                         case 4: {
-                            // tutorList = LoadTutors(tutorList, "schedule.xlsx");
                             fileHandler.findAllTutors();
+                        } break;
+                        case 5: {
+                            // tutorList = LoadTutors(tutorList, "schedule.xlsx");
+                            fileHandler.saveScheduleFile();
                         } break;
                     }
                 } while(secondaryChoice != 0);

@@ -44,7 +44,46 @@ class FileHandler {
         }
 
         void saveScheduleFile() {
+            XLDocument doc;
+            doc.create("save_schedule.xlsx");
+            auto save_sheet = doc.workbook().worksheet("Sheet1");
+            save_sheet.setName("Lab Schedule");
 
+
+            std::string days[] {"Monday", "Tuesday", "Wednesday", "Thursday", "Friday"};
+            int currentRow = 1;
+            for (WorkDayInfo day : m_workdays) {
+                save_sheet.cell(currentRow++, 1).value() = days[day.m_day];
+                int dayStart = currentRow;
+                for (MCTime t = day.m_openTime; !(t == day.m_closeTime); t = t.next()) {
+                    save_sheet.cell(currentRow++, 1).value() = t.to_string_12() + "-" + t.next().to_string_12();
+                }
+
+                int currentCol = 2;
+                for (const Tutor & tutor : *m_tutors) {
+                    currentRow = dayStart;
+                    currentCol = 2;
+                    for (MCTime t = day.m_openTime; !(t == day.m_closeTime); t = t.next()) {
+                        auto tutor_schedule = tutor.getSchedule();
+                        if (std::find(tutor_schedule->begin(), tutor_schedule->end(), Shift(t, t.next(), day.m_day)) != tutor_schedule->end()) {
+                            while (save_sheet.cell(currentRow, currentCol).value().asString() != "") {
+                                for (int r = currentRow - 1; save_sheet.cell(r, currentCol).value().asString() == tutor.getName(); r--) {
+                                    save_sheet.cell(r, currentCol + 1).value() = tutor.getName();
+                                    save_sheet.cell(r, currentCol).value() = "";
+                                }
+                                currentCol++;
+                            }
+                            save_sheet.cell(currentRow, currentCol).value() = tutor.getName();
+                        }
+                        currentRow++;
+                    }
+                }
+
+                currentRow++;
+                currentCol = 1;
+            }
+
+            doc.save();
         }
         
         // Functions that returns pointer to a tutor given their name

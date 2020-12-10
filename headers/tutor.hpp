@@ -30,6 +30,10 @@ struct Shift {
     std::string to_string() const {
         return "Day:" + std::to_string(m_day) + " Start: " + m_start.to_string() + " End: " + m_end.to_string() ;
     }
+
+    bool operator==(const Shift & rhs) {
+        return m_start == rhs.m_start && m_day == rhs.m_day;
+    }
     
     void printShift(){
         std::cout << to_string() << "\n";
@@ -119,6 +123,8 @@ class Tutor {
 
     // Getters
     std::string getName() const { return m_name; }
+
+    std::shared_ptr<std::vector<Shift>> getSchedule() const {return m_schedule; }
 
     // Operators needed for compatibilty sake
     friend bool operator==(const Tutor & lhs, const Tutor & rhs);

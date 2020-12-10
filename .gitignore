@@ -6,3 +6,5 @@ build/obj/menu.o
 build/obj/testMenu.o
 OpenXLSX
 ~$schedule.xlsx
+~$save_schedule.xlsx
+save_schedule.xlsx
