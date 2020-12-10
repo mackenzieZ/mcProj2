@@ -59,19 +59,28 @@ class FileHandler {
                     save_sheet.cell(currentRow++, 1).value() = t.to_string_12() + "-" + t.next().to_string_12();
                 }
 
-                int currentCol = 2;
                 for (const Tutor & tutor : *m_tutors) {
                     currentRow = dayStart;
-                    currentCol = 2;
+                    int currentCol = 2;
                     for (MCTime t = day.m_openTime; !(t == day.m_closeTime); t = t.next()) {
                         auto tutor_schedule = tutor.getSchedule();
                         if (std::find(tutor_schedule->begin(), tutor_schedule->end(), Shift(t, t.next(), day.m_day)) != tutor_schedule->end()) {
-                            while (save_sheet.cell(currentRow, currentCol).value().asString() != "") {
-                                for (int r = currentRow - 1; save_sheet.cell(r, currentCol).value().asString() == tutor.getName(); r--) {
-                                    save_sheet.cell(r, currentCol + 1).value() = tutor.getName();
-                                    save_sheet.cell(r, currentCol).value() = "";
-                                }
+                            int originalCol = currentCol;
+                            bool goNext = false;
+                            while (save_sheet.cell(currentRow, currentCol).value().asString() != "" && !goNext) {
                                 currentCol++;
+                                for (int r = currentRow - 1; save_sheet.cell(r, originalCol).value().asString() == tutor.getName(); r--) {
+                                    if (save_sheet.cell(currentRow, currentCol).value().asString() != "") {
+                                        goNext = true;
+                                        break;
+                                    }
+                                }
+                            }
+                            if (currentCol != originalCol) {
+                                for (int r = currentRow - 1; save_sheet.cell(r, originalCol).value().asString() == tutor.getName(); r--) {
+                                    save_sheet.cell(r, currentCol).value() = tutor.getName();
+                                    save_sheet.cell(r, originalCol).value() = "";
+                                }
                             }
                             save_sheet.cell(currentRow, currentCol).value() = tutor.getName();
                         }
@@ -80,7 +89,6 @@ class FileHandler {
                 }
 
                 currentRow++;
-                currentCol = 1;
             }
 
             doc.save();
