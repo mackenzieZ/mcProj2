@@ -84,8 +84,8 @@ int main(int argc, char ** argv) {
                                 tutorList->push_back(t1);
                                 }break;
                             }
-
                             std::cout << "Staff member added" << std::endl;
+                            displayAllTutors(tutorList);
                         } break;
                         case 2://remove tutor
                         {
@@ -105,7 +105,7 @@ int main(int argc, char ** argv) {
                             }else{
                                 std::cout << "Staff member not found in list; unable to remove" << std::endl;
                             }
-                            
+                            displayAllTutors(tutorList);
 
                         } break;
                         case 3:{
@@ -140,18 +140,49 @@ int main(int argc, char ** argv) {
                             }while(terteraryChoice != 0);
                         } break;
                         case 4: {
+<<<<<<< HEAD
                             fileHandler.findAllTutors();
                         } break;
                         case 5: {
                             // tutorList = LoadTutors(tutorList, "schedule.xlsx");
                             fileHandler.saveScheduleFile();
+=======
+                            tutorList = LoadTutors(tutorList, "schedule.xlsx");
+                            //Need to load abilities file too and match
+>>>>>>> 99d7e89aed1e6dadcc36a7c04c3f055395881245
                         } break;
+                        default: //invalid entry
+                        {
+                            std::cout << "Invalid choice - Try again" << std::endl;
+                        }break;
                     }
                 } while(secondaryChoice != 0);
             } break;  
             case 2://Course Information
             {
-                displayTutors(tutorList);
+            courseMenu();
+            std::cin >> secondaryChoice;
+
+            do{
+                switch(secondaryChoice){
+                    case 1://add course
+                    {
+
+                    }break;
+                    case 2://remove course
+                    {
+
+                    }break;
+                    case 3://edit existing course
+                    {
+
+                    }break;
+                    default://invalid entry
+                    {
+                        std::cout << "Invalid choice - Try again" << std::endl;
+                    }break;
+                }
+            }while(secondaryChoice !=0 );
             }break;
             case 3://Generate Review
             {}break;

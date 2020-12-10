@@ -44,7 +44,6 @@ class Tutor {
     public:
 
     Tutor() {
-        defaultSchedule();
         defaultAbilities();
     }
 
@@ -64,7 +63,6 @@ class Tutor {
     Tutor(std::string tutorName, bool cleared, Employee_Type type = Employee_Type::TUTOR):
     m_name(tutorName), m_cleared(cleared), m_type(type)
     {
-        defaultSchedule();
         defaultAbilities();
         m_schedule = std::shared_ptr<std::vector<Shift>>(new std::vector<Shift>);
     }
@@ -75,6 +73,7 @@ class Tutor {
     }
 
     void displaySchedule() {
+        std::cout << "===Schedule===" << std::endl;
         for (auto iterator = m_schedule->begin(); iterator != m_schedule->end(); iterator++)  {
             iterator->printShift();
         }
@@ -99,19 +98,10 @@ class Tutor {
         m_abilities["s152"] = false;
         m_abilities["s352"] = false; 
     }
-    void defaultSchedule() {
-        // Shift emptyShift;
-        // for(int i = 0; i < NUM_DAYS; i++){
-        //     m_schedule[i] = emptyShift;
-        // }
-    }
-
-    //===== Functions to implement later ======
-    //display all tutors in list 
-    //export the vector to an excel file to be read in again
 
     void printAbilities()
     {
+        std::cout << "===Abilities===" << std::endl;
         for (auto const& pair: m_abilities) {
             std::cout << "{" << pair.first << ": " << pair.second << "}\n";
         }
@@ -124,8 +114,13 @@ class Tutor {
     // Getters
     std::string getName() const { return m_name; }
 
+<<<<<<< HEAD
     std::shared_ptr<std::vector<Shift>> getSchedule() const {return m_schedule; }
 
+=======
+    Employee_Type getType() const { return m_type;}
+    
+>>>>>>> 99d7e89aed1e6dadcc36a7c04c3f055395881245
     // Operators needed for compatibilty sake
     friend bool operator==(const Tutor & lhs, const Tutor & rhs);
 
