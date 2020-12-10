@@ -79,7 +79,7 @@ void displayAllTutors(std::shared_ptr<std::vector<Tutor>> tutors){
         std::cout << "List empty - no staff to display " << std::endl;
     }
     for (std::vector<Tutor>::iterator itr = tutors->begin(); itr != tutors->end(); itr++){
-        std::cout << itr->getName();
+        std::cout << itr->getName() << std::endl;
         //Need to figure out a way to set type from excell sheet maybe by col number
         /*if(itr->getType() == 1){
             std::cout << " (Front Desk)" << std::endl;
