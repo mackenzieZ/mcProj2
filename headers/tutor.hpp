@@ -71,6 +71,7 @@ class Tutor {
     }
 
     void displaySchedule() {
+        std::cout << "===Schedule===" << std::endl;
         for (auto iterator = m_schedule->begin(); iterator != m_schedule->end(); iterator++)  {
             iterator->printShift();
         }
@@ -108,6 +109,7 @@ class Tutor {
 
     void printAbilities()
     {
+        std::cout << "===Abilities===" << std::endl;
         for (auto const& pair: m_abilities) {
             std::cout << "{" << pair.first << ": " << pair.second << "}\n";
         }
@@ -120,6 +122,7 @@ class Tutor {
     // Getters
     std::string getName() const { return m_name; }
 
+    Employee_Type getType() const { return m_type;}
     // Operators needed for compatibilty sake
     friend bool operator==(const Tutor & lhs, const Tutor & rhs);
 

@@ -74,9 +74,20 @@ int findPosition(std::shared_ptr<std::vector<Tutor>> tutors, std::string name) {
     return -1;
 }
 
-void displayTutors(std::shared_ptr<std::vector<Tutor>> tutors){
+void displayAllTutors(std::shared_ptr<std::vector<Tutor>> tutors){
+    if(tutors->empty()){
+        std::cout << "List empty - no staff to display " << std::endl;
+    }
     for (std::vector<Tutor>::iterator itr = tutors->begin(); itr != tutors->end(); itr++){
-        std::cout << *itr << std::endl;
-        //*itr.displaySchedule();
+        std::cout << itr->getName();
+        //Need to figure out a way to set type from excell sheet maybe by col number
+        /*if(itr->getType() == 1){
+            std::cout << " (Front Desk)" << std::endl;
+        }else{
+            std::cout << " (Tutor)" << std::endl;
+        }
+        */
+        itr->displaySchedule();
+        itr->printAbilities();
     }
 }

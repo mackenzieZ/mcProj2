@@ -82,8 +82,8 @@ int main(int argc, char ** argv) {
                                 tutorList->push_back(t1);
                                 }break;
                             }
-
                             std::cout << "Staff member added" << std::endl;
+                            displayAllTutors(tutorList);
                         } break;
                         case 2://remove tutor
                         {
@@ -103,7 +103,7 @@ int main(int argc, char ** argv) {
                             }else{
                                 std::cout << "Staff member not found in list; unable to remove" << std::endl;
                             }
-                            
+                            displayAllTutors(tutorList);
 
                         } break;
                         case 3:{
@@ -145,7 +145,7 @@ int main(int argc, char ** argv) {
             } break;  
             case 2://Course Information
             {
-                displayTutors(tutorList);
+                displayAllTutors(tutorList);
             }break;
             case 3://Generate Review
             {}break;
