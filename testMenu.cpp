@@ -140,16 +140,11 @@ int main(int argc, char ** argv) {
                             }while(terteraryChoice != 0);
                         } break;
                         case 4: {
-<<<<<<< HEAD
                             fileHandler.findAllTutors();
                         } break;
                         case 5: {
                             // tutorList = LoadTutors(tutorList, "schedule.xlsx");
                             fileHandler.saveScheduleFile();
-=======
-                            tutorList = LoadTutors(tutorList, "schedule.xlsx");
-                            //Need to load abilities file too and match
->>>>>>> 99d7e89aed1e6dadcc36a7c04c3f055395881245
                         } break;
                         default: //invalid entry
                         {
