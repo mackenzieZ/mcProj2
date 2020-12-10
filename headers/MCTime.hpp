@@ -32,7 +32,7 @@ struct MCTime {
     
     std::string to_string() const {
         return std::to_string(m_hour) + ":" + std::to_string(m_min);
-    };
+    }
 
     MCTime next() {
         return m_min < 30 ? MCTime(m_hour, 30) : MCTime(m_hour + 1, 0);
