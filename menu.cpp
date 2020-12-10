@@ -11,7 +11,7 @@ void displayMainMenu() {
 
 void tutorMenu(){
     std::cout << "===Tutor Information=== " << std::endl;
-    std::cout << "1)Add Tutor" << std::endl << "2)Remove Tutor" << std::endl << "3) Edit Existing Tutor" << std::endl << "4) Load Schedule File" << std::endl << "0)Return to Main Menu" << std::endl;
+    std::cout << "1)Add Tutor" << std::endl << "2)Remove Tutor" << std::endl << "3) Edit Existing Tutor" << std::endl << "4) Load Schedule File" << std::endl << "5) Save Schedule to file" << std::endl << "0)Return to Main Menu" << std::endl;
     std::cout << "Which option would you like to access?" << std::endl;
 }
 

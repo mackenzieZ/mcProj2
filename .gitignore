@@ -6,3 +6,6 @@ build/obj/menu.o
 build/obj/testMenu.o
 OpenXLSX
 .vscode/settings.json
+~$schedule.xlsx
+~$save_schedule.xlsx
+save_schedule.xlsx

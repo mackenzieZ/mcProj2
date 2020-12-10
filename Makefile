@@ -9,11 +9,11 @@ COMP_FLAGS = -I'$(CURDIR)/OpenXLSX/library' -I'$(CURDIR)/OpenXLSX/build/library'
 
 all: $(TARGET)
 
-$(TARGET): $(OBJDIR)/testMenu.o $(OBJDIR)/menu.o $(OBJDIR)/ExcelReader.o
+$(TARGET): $(OBJDIR)/testMenu.o $(OBJDIR)/menu.o
 	$(CXX) $(CXX_FLAGS) $(OBJDIR)/testMenu.o -o $(TARGET) $(LINK_FLAGS)
 
-$(OBJDIR)/ExcelReader.o: ExcelReader.cpp
-	$(CXX) $(CXX_FLAGS) -c $< $(COMP_FLAGS) -o $@
+# $(OBJDIR)/ExcelReader.o: ExcelReader.cpp
+# 	$(CXX) $(CXX_FLAGS) -c $< $(COMP_FLAGS) -o $@
 
 $(OBJDIR)/menu.o: menu.cpp
 	$(CXX) $(CXX_FLAGS) -c $< $(COMP_FLAGS) -o $@

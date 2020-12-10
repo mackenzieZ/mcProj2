@@ -14,4 +14,12 @@ struct WorkDayInfo {
     WorkDayInfo() : m_openTime(0, 0), m_closeTime(0, 0) {};
 
     WorkDayInfo(Work_Day day, MCTime open, MCTime close, int row) : m_day(day), m_openTime(open), m_closeTime(close), m_excelStartRow(row) {};
+
+    int GetShiftCount() {
+        int count = 0;
+        for (MCTime time = m_openTime; !(time == m_closeTime); time = time.next()) {
+            count++;
+        }
+        return count;
+    }
 };

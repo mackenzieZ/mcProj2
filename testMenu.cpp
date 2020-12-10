@@ -1,12 +1,14 @@
 //testing the main menu
 
 #include "menu.cpp"
-#include "ExcelReader.cpp"
+#include "FileHandler.hpp"
 
 
 int main(int argc, char ** argv) {
     int primaryChoice, secondaryChoice, terteraryChoice;
     std::shared_ptr<std::vector<Tutor>> tutorList(new std::vector<Tutor>);
+    FileHandler fileHandler(tutorList, "schedule.xlsx");
+
     do {
         displayMainMenu();
         std::cin >> primaryChoice;
@@ -25,7 +27,7 @@ int main(int argc, char ** argv) {
                             bool cleared;
                             std::cout << "New Name: ";
                             std::cin >> n_name;
-                            if(findTutor(tutorList, n_name) != NULL){
+                            if(fileHandler.findTutor(n_name) != NULL){
                                 std::cout << "Staff Name Already taken - try again" << std::endl;
                                 break;
                             }
@@ -120,17 +122,17 @@ int main(int argc, char ** argv) {
                                 std::cin >> terteraryChoice;
                                 std::cout << "Enter the Tutor's Name you wish to edit" << std::endl;
                                 std::cin >> tutorToEdit;
-                                if(findTutor(tutorList, tutorToEdit) == NULL){
+                                if(fileHandler.findTutor(tutorToEdit) == NULL){
                                     std::cout << "This tutor does not exist on the list" << std::endl;
                                 }
 
                                 if(terteraryChoice == 1){
                                     //edit schedule
-                                    findTutor(tutorList, tutorToEdit)->displaySchedule();
+                                    fileHandler.findTutor(tutorToEdit)->displaySchedule();
                                     
                                 }else if(terteraryChoice == 2){
                                     //edit abilities
-                                    findTutor(tutorList, tutorToEdit)->printAbilities();
+                                    fileHandler.findTutor(tutorToEdit)->printAbilities();
                                     
                                 }else{
                                     std::cout << "Invalid entry" << std::endl;
@@ -138,8 +140,16 @@ int main(int argc, char ** argv) {
                             }while(terteraryChoice != 0);
                         } break;
                         case 4: {
+<<<<<<< HEAD
+                            fileHandler.findAllTutors();
+                        } break;
+                        case 5: {
+                            // tutorList = LoadTutors(tutorList, "schedule.xlsx");
+                            fileHandler.saveScheduleFile();
+=======
                             tutorList = LoadTutors(tutorList, "schedule.xlsx");
                             //Need to load abilities file too and match
+>>>>>>> 99d7e89aed1e6dadcc36a7c04c3f055395881245
                         } break;
                         default: //invalid entry
                         {
