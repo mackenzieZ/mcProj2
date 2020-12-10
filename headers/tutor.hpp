@@ -40,7 +40,6 @@ class Tutor {
     public:
 
     Tutor() {
-        defaultSchedule();
         defaultAbilities();
     }
 
@@ -60,7 +59,6 @@ class Tutor {
     Tutor(std::string tutorName, bool cleared, Employee_Type type = Employee_Type::TUTOR):
     m_name(tutorName), m_cleared(cleared), m_type(type)
     {
-        defaultSchedule();
         defaultAbilities();
         m_schedule = std::shared_ptr<std::vector<Shift>>(new std::vector<Shift>);
     }
@@ -96,16 +94,6 @@ class Tutor {
         m_abilities["s152"] = false;
         m_abilities["s352"] = false; 
     }
-    void defaultSchedule() {
-        // Shift emptyShift;
-        // for(int i = 0; i < NUM_DAYS; i++){
-        //     m_schedule[i] = emptyShift;
-        // }
-    }
-
-    //===== Functions to implement later ======
-    //display all tutors in list 
-    //export the vector to an excel file to be read in again
 
     void printAbilities()
     {
