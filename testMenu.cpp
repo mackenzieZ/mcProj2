@@ -139,13 +139,40 @@ int main(int argc, char ** argv) {
                         } break;
                         case 4: {
                             tutorList = LoadTutors(tutorList, "schedule.xlsx");
+                            //Need to load abilities file too and match
                         } break;
+                        default: //invalid entry
+                        {
+                            std::cout << "Invalid choice - Try again" << std::endl;
+                        }break;
                     }
                 } while(secondaryChoice != 0);
             } break;  
             case 2://Course Information
             {
-                displayAllTutors(tutorList);
+            courseMenu();
+            std::cin >> secondaryChoice;
+
+            do{
+                switch(secondaryChoice){
+                    case 1://add course
+                    {
+
+                    }break;
+                    case 2://remove course
+                    {
+
+                    }break;
+                    case 3://edit existing course
+                    {
+
+                    }break;
+                    default://invalid entry
+                    {
+                        std::cout << "Invalid choice - Try again" << std::endl;
+                    }break;
+                }
+            }while(secondaryChoice !=0 );
             }break;
             case 3://Generate Review
             {}break;

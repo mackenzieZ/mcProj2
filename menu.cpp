@@ -21,6 +21,18 @@ void editTutorMenu(){
     std::cout << "Which option would you like to access?" << std::endl;
 }
 
+void courseMenu(){
+    std::cout << "===Course Information===" << std::endl;
+    std::cout << "1)Add Course" << std::endl << "2)Remove Course" << std::endl << "3) Edit Existing Course" << std::endl << "4) Load Course" << std::endl << "0)Return to Main Menu" << std::endl;
+    std::cout << "Which option would you like to access?" << std::endl;
+}
+
+void editCourseMenu(){
+    std::cout << "===Edit Course===" << std::endl;
+    std::cout << "1)Change Exam Dates" << std::endl << "2)Change Course Information" << std::endl << "0)Return to Course Information" << std::endl;
+    std::cout << "Which option would you like to access?" << std::endl;
+ }
+
 void abilitiesMenuOption(Tutor t1){
     int j;
     std::string key;

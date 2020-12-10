@@ -111,6 +111,7 @@ class Tutor {
     std::string getName() const { return m_name; }
 
     Employee_Type getType() const { return m_type;}
+    
     // Operators needed for compatibilty sake
     friend bool operator==(const Tutor & lhs, const Tutor & rhs);
 
