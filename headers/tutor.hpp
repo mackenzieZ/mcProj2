@@ -23,7 +23,7 @@ struct Shift {
     MCTime m_end;
     Work_Day m_day;
 
-    Shift() : m_start(0), m_end(0), m_day(Work_Day(0)) {}
+    Shift() : m_start(0, 0), m_end(0, 0), m_day(Work_Day(0)) {}
 
     Shift(MCTime start, MCTime end, Work_Day day) : m_start(start), m_end(end), m_day(day) {};
 

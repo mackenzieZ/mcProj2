@@ -7,6 +7,7 @@
 #include <vector>
 #include <memory>
 #include <algorithm>
+#include <tuple>
 #include "tutor.hpp"
 #include "WorkDayInfo.hpp"
 
@@ -50,45 +51,74 @@ class FileHandler {
             save_sheet.setName("Lab Schedule");
 
 
-            std::string days[] {"Monday", "Tuesday", "Wednesday", "Thursday", "Friday"};
+            std::string days[] {"Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"};
+            int dayStartRows[7] = {0};
             int currentRow = 1;
             for (WorkDayInfo day : m_workdays) {
                 save_sheet.cell(currentRow++, 1).value() = days[day.m_day];
                 int dayStart = currentRow;
+                dayStartRows[day.m_day] = dayStart;
                 for (MCTime t = day.m_openTime; !(t == day.m_closeTime); t = t.next()) {
                     save_sheet.cell(currentRow++, 1).value() = t.to_string_12() + "-" + t.next().to_string_12();
                 }
+                currentRow++;
+            }
 
-                for (const Tutor & tutor : *m_tutors) {
-                    currentRow = dayStart;
-                    int currentCol = 2;
-                    for (MCTime t = day.m_openTime; !(t == day.m_closeTime); t = t.next()) {
-                        auto tutor_schedule = tutor.getSchedule();
-                        if (std::find(tutor_schedule->begin(), tutor_schedule->end(), Shift(t, t.next(), day.m_day)) != tutor_schedule->end()) {
-                            int originalCol = currentCol;
-                            bool goNext = false;
-                            while (save_sheet.cell(currentRow, currentCol).value().asString() != "" && !goNext) {
-                                currentCol++;
-                                for (int r = currentRow - 1; save_sheet.cell(r, originalCol).value().asString() == tutor.getName(); r--) {
-                                    if (save_sheet.cell(currentRow, currentCol).value().asString() != "") {
-                                        goNext = true;
-                                        break;
-                                    }
-                                }
-                            }
-                            if (currentCol != originalCol) {
-                                for (int r = currentRow - 1; save_sheet.cell(r, originalCol).value().asString() == tutor.getName(); r--) {
-                                    save_sheet.cell(r, currentCol).value() = tutor.getName();
-                                    save_sheet.cell(r, originalCol).value() = "";
-                                }
-                            }
-                            save_sheet.cell(currentRow, currentCol).value() = tutor.getName();
+            std::vector<std::tuple<int, int, int, Tutor>> occupiedCells;
+
+            for (const Tutor & tutor : *m_tutors) {
+                std::vector<std::tuple<MCTime, MCTime, Work_Day>> shiftDurations;
+                Shift startShift;
+                MCTime shiftEnd(0, 0);
+                for (int i = 0; i < tutor.getSchedule()->size(); i++) {
+                    if (i != 0 && (*tutor.getSchedule())[i].m_start == shiftEnd && (*tutor.getSchedule())[i].m_day == startShift.m_day) {
+                        shiftEnd = (*tutor.getSchedule())[i].m_end;
+                    }
+                    else {
+                        if (i != 0) {
+                            shiftDurations.push_back(std::tuple<MCTime, MCTime, Work_Day>(startShift.m_start, shiftEnd, startShift.m_day));
                         }
-                        currentRow++;
+                        startShift = (*tutor.getSchedule())[i];
+                        shiftEnd = startShift.m_end;
                     }
                 }
+                shiftDurations.push_back(std::tuple<MCTime, MCTime, Work_Day>(startShift.m_start, shiftEnd, startShift.m_day));
 
-                currentRow++;
+                for (auto tuple : shiftDurations) {
+                    int startRow = dayStartRows[std::get<2>(tuple)];
+                    int currentRow = startRow;
+                    MCTime shiftStartTime = std::get<0>(tuple);
+                    MCTime shiftEndTime = std::get<1>(tuple);
+                    WorkDayInfo dayInfo;
+                    for (WorkDayInfo d : m_workdays) {
+                        if (d.m_day == std::get<2>(tuple)) {
+                            dayInfo = d;
+                        }
+                    }
+                    for (MCTime t = dayInfo.m_openTime; !(t == dayInfo.m_closeTime) && !(t == shiftStartTime); t = t.next()) {
+                        currentRow++;
+                    }
+                    int shiftStartRow = currentRow;
+                    bool spotFound = false;
+                    int col = 1;
+                    while (!spotFound) {
+                        currentRow = shiftStartRow;
+                        col++;
+                        bool occupied = false;
+                        for (MCTime t = shiftStartTime; !(t == shiftEndTime); t = t.next()) {
+                            if (save_sheet.cell(currentRow++, col).value().asString() != "") {
+                                occupied = true;
+                                break;
+                            }
+                        }
+                        spotFound = !occupied;
+                    }
+                    
+                    currentRow = shiftStartRow;
+                    for (MCTime t = shiftStartTime; !(t == shiftEndTime); t = t.next()) {
+                        save_sheet.cell(currentRow++, col).value() = tutor.getName();
+                    }
+                }
             }
 
             doc.save();
