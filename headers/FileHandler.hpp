@@ -134,6 +134,10 @@ class FileHandler {
             return NULL;
         }
 
+        const std::vector<WorkDayInfo> getWorkDaysInfo() const {
+            return m_workdays;
+        }
+
     private:
         // Analyzes the scheudle Excel sheet for information usch as on which line each of the days start
         void analyzeScheduleSheet() {

@@ -2,12 +2,14 @@
 
 #include "menu.cpp"
 #include "FileHandler.hpp"
+#include "ScheduleGenerator.hpp"
 
 
 int main(int argc, char ** argv) {
     int primaryChoice, secondaryChoice, terteraryChoice;
     std::shared_ptr<std::vector<Tutor>> tutorList(new std::vector<Tutor>);
     FileHandler fileHandler(tutorList, "schedule.xlsx");
+    ScheduleGenerator generator("Input", fileHandler);
 
     do {
         displayMainMenu();
@@ -145,6 +147,9 @@ int main(int argc, char ** argv) {
                         case 5: {
                             // tutorList = LoadTutors(tutorList, "schedule.xlsx");
                             fileHandler.saveScheduleFile();
+                        } break;
+                        case 6: {
+                            generator.GenerateSchedule(tutorList);
                         } break;
                         default: //invalid entry
                         {
